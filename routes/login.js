@@ -54,5 +54,16 @@ if (!isPass) {
     }
 
 })
+router.post("/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure:true,
+        sameSite: "None", // use "Lax" if frontend and backend are on the same site
+    });
 
+    res.status(200).json({
+        success: true,
+        message: "Logged out successfully"
+    });
+});
 module.exports = router

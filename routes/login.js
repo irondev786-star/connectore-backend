@@ -23,10 +23,13 @@ router.post("/", [
             return res.status(400).json({ errors: [{ msg: "Invalid Email or Password" }] })
         }
 
-        const isPass = bcrypt.compare(user.password,password)
-        if (!isPass) {
-            return res.status(400).json({ errors: [{ msg: "Invalid Email or Password" }] })
-        }
+      const isPass = await bcrypt.compare(password, user.password);
+
+if (!isPass) {
+    return res.status(400).json({
+        errors: [{ msg: "Invalid Email or Password" }]
+    });
+}
         const payload = { user: { id: user.id } }
         jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 36000 }, (err, token) => {
             if (!err) {

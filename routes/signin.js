@@ -23,11 +23,11 @@ router.post("/", [
 
         let user = await users.findOne({ email })
         if (user) {
-            return res.status(400).json({ errors: [{ msg: "Email Already taken by another use" }] })
+            return res.status(400).json({ errors: [{ msg: "Email Already taken by another user" }] })
         }
         user = await users.findOne({ fullName })
         if (user) {
-            return res.status(400).json({ errors: [{ msg: "Username is  Already taken by another use" }] })
+            return res.status(400).json({ errors: [{ msg: "Username is  Already taken by another user" }] })
         }
 
         const salt = await bcrypt.genSalt(process.env.ROUND)
@@ -44,6 +44,7 @@ router.post("/", [
             if (!err) {
                 res.cookie("token", token, {
                     httpOnly: true,
+                    secure: true,
                     sameSite: "none",
                     maxAge: 7 * 24 * 60 * 60 * 1000,
                 });

@@ -17,6 +17,7 @@ app.use(
          origin: [
             "http://localhost:5173",
             "http://192.168.1.29:5173",
+             "https://poster-application.vercel.app",
         ],
         credentials: true,
     })
